@@ -5,8 +5,11 @@ Merge function for 2048 game.
 
 def merge(line):
     """
+    (line: List[int]) -> List[int]
+
     Function that merges a single row or column in 2048.
     """
+
     # Step 1:
     # Iterate over the input and create an output list that has all of the
     # non-zero tiles slid over to the beginning of the list with the
