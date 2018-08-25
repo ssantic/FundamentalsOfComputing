@@ -27,12 +27,26 @@ def merge(line):
     # Iterate over the list created in the previous step and create another
     # new list in which pairs of tiles in the first list are replaced with a
     # tile of twice the value and a zero tile.
-    pairs_list = []
+    pairs_list = list(intermediate_list)
 
-    for i in range(len(intermediate_list), 2):
-        pairs_list.append(intermediate_list[i * 2])
-        pairs_list.list_append(0)
+    prev_val = pairs_list[0]
+    for i in range(1, len(pairs_list)):
+        current_val = pairs_list[i]
+        if current_val == prev_val:
+            pairs_list[i - 1] = prev_val * 2
+            pairs_list[i] = 0
+        prev_val = pairs_list[i]
 
     # Step 3:
     # Repeat step one using the list created in step two to slide the tiles to
     # the beginning of the list again.
+    final_list = []
+
+    for element in pairs_list:
+        if element != 0:
+            final_list.append(element)
+
+    while len(final_list) < len(pairs_list):
+        final_list.append(0)
+
+    return final_list
