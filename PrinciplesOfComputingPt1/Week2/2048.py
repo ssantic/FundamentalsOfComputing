@@ -1,7 +1,6 @@
 """
-Clone of 2048 game
+Clone of 2048 game.
 """
-
 import random
 # import poc_2048_gui
 
@@ -11,13 +10,12 @@ DOWN = 2
 LEFT = 3
 RIGHT = 4
 
-# Offsets for computing tile indices in each direction
-# DO NOT MODIFY this dictionary
+# Offsets for computing tile indices in each direction.
+# DO NOT MODIFY this dictionary.
 OFFSETS = {UP: (1, 0),
            DOWN: (-1, 0),
            LEFT: (0, 1),
            RIGHT: (0, -1)}
-
 
 def merge(line):
     """
@@ -67,13 +65,22 @@ def merge(line):
 
     return final_list
 
-
 class TwentyFortyEight:
     """Class to run the game logic"""
     def __init__(self, grid_height, grid_width):
         self.grid_height = grid_height
         self.grid_width = grid_width
         self.reset()
+
+        initial_up = [(0, i) for i in range(self.grid_width)]
+        initial_down = [(self.grid_height - 1, i) for i in range(self.grid_width)]
+        initial_left = [(i, 0) for i in range(self.grid_height)]
+        initial_right = [(i, self.grid_width - 1) for i in range(self.grid_height)]
+
+        self.INITIAL_TILES = {UP: initial_up,
+                              DOWN: initial_down,
+                              LEFT: initial_left,
+                              RIGHT: initial_right}
 
     def reset(self):
         """Reset the game so the grid is empty"""
@@ -130,6 +137,27 @@ class TwentyFortyEight:
         Move all tiles in the given direction and add
         a new tiles if any tiled moved
         """
-        pass
+        if direction in (UP, DOWN):
+            n = self.grid_height
+        else:
+            n = self.grid_width
+
+        has_moved = False
+
+        for tup in self.INITIAL_TILES[direction]:
+            tmp_list = []
+            for i in range(n):
+                row, col = tup[0] + OFFSETS[direction][0] * i, tup[1] + OFFSETS[direction][1] * i
+                tmp_list.append(self.get_tile(row, col))
+            new_list = merge(tmp_list)
+            for i in range(n):
+                row, col = tup[0] + OFFSETS[direction][0] * i, tup[1] + OFFSETS[direction][1] * i
+                self.set_tile(row, col, new_list[i])
+                if new_list[i] != tmp_list[i]:
+                    has_moved = True
+
+        if has_moved:
+            self.new_tile()
+
 
 # poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
