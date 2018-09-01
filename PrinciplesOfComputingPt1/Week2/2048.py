@@ -104,21 +104,26 @@ class TwentyFortyEight:
         result = ''
         for irow in range(self.grid_height):
             for icol in range(self.grid_width):
-                result += 
+                result += str(self.grid[irow][icol])
             result += '\n'
-        result += self.rat_1.__str__()
-        result += '\n'
-        result += self.rat_2.__str__()
 
         return result
 
     def get_grid_height(self):
         """Get the height of the board"""
-        return 0
+        return self.grid_height
 
     def get_grid_width(self):
         """Get the width of the board"""
-        return 0
+        return self.grid_width
+
+    def set_tile(self, row, col, value):
+        """Set tile at postion row, col to have the given value"""
+        self.grid[row][col] = value
+
+    def get_tile(self, row, col):
+        """Return the value of the tile at position row, col"""
+        return self.grid[row][col]
 
     def move(self, direction):
         """
@@ -126,13 +131,5 @@ class TwentyFortyEight:
         a new tiles if any tiled moved
         """
         pass
-
-    def set_tile(self, row, col, value):
-        """Set tile at postion row, col to have the given value"""
-        pass
-
-    def get_tile(self, row, col):
-        """Return the value of the tile at position row, col"""
-        return 0
 
 # poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
