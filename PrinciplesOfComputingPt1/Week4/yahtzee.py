@@ -77,7 +77,12 @@ def gen_all_holds(hand):
 
     Returns a set of tuples, where each tuple is dice to hold
     """
-    return set([()])
+    hand_length = len(hand)
+    all_subsets = []
+    for idx in range(1 << hand_length):
+        all_subsets.append(tuple([hand[j] for j in range(hand_length) if (idx & (1 << j))]))
+
+    return set(all_subsets)
 
 
 
