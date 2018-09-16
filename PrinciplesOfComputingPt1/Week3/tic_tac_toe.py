@@ -59,7 +59,7 @@ def mc_move(board, player, trials):
     """Return a board move for a machine player"""
     board_size = board.get_dim()
     scores = [[0 for _ in range(board_size)] for _ in range(board_size)]
-    for trial in range(trials):
+    for _ in range(trials):
         trial_board = board
         mc_trial(trial_board, player)
         mc_update_scores(scores, trial_board, player)
