@@ -58,7 +58,15 @@ def expected_value(held_dice, num_die_sides, num_free_dice):
 
     Returns a floating point expected value
     """
-    return 0.0
+    die_sides = [i for i in range(1, num_die_sides + 1)]
+    all_seqs = gen_all_sequences(die_sides, num_free_dice)
+
+    total_score = 0
+
+    for seq in all_seqs:
+        total_score += score(held_dice + seq)
+
+    return total_score / float(len(all_seqs))
 
 
 def gen_all_holds(hand):
