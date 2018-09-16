@@ -49,11 +49,17 @@ def get_best_move(board, scores):
     return best_move
 
 
-
-
-
 def mc_move(board, player, trials):
-    raise NotImplementedError
+    board_size = board.get_dim()[0]
+    scores = [[0 for _ in range(board_size)] for _ in range(board_size)]
+    for trial in range(trials):
+        trial_board = board
+        mc_trial(trial_board, player)
+        mc_update_scores(scores, trial_board, player)
+    best_move = get_best_move(board, scores)
+    return best_move
+
+
 
 
 
