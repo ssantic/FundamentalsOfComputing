@@ -18,6 +18,7 @@ SCORE_OTHER = 1.0     # Score for squares played by the other player
 
 
 def mc_trial(board, player):
+    """Take an initial board and iteratively play the game until over"""
     current_player = player
     while board.check_win() is None:
         empty_squares = board.get_empty_squares()
@@ -27,6 +28,7 @@ def mc_trial(board, player):
 
 
 def mc_update_scores(scores, board, player):
+    """Take a grid of scores, score the completed board, and update the grid"""
     board_size = board.get_dim()
     winner = board.check_win()
     score_player = (player == winner) * SCORE_CURRENT + (player != winner) * -SCORE_CURRENT
@@ -38,6 +40,7 @@ def mc_update_scores(scores, board, player):
 
 
 def get_best_move(board, scores):
+    """Find all of the empty squares with the maximum score and return one"""
     empty_squares = board.get_empty_squares()
     empty_scores = []
     for (row, col) in empty_squares:
@@ -53,6 +56,7 @@ def get_best_move(board, scores):
 
 
 def mc_move(board, player, trials):
+    """Return a board move for a machine player"""
     board_size = board.get_dim()
     scores = [[0 for _ in range(board_size)] for _ in range(board_size)]
     for trial in range(trials):
