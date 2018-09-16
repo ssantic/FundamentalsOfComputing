@@ -18,7 +18,12 @@ SCORE_OTHER = 1.0     # Score for squares played by the other player
 
 
 def mc_trial(board, player):
-    raise NotImplementedError
+    current_player = player
+    while board.check_win() is not None:
+        empty_squares = board.get_empty_sqares()
+        (row, col) = random.choice(empty_squares)
+        board.move(row, col, current_player)
+        current_player = provided.switch_player(current_player)
 
 
 def mc_update_scores(scores, board, player):
