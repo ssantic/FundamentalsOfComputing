@@ -28,7 +28,8 @@ def mc_update_scores(scores, board, player):
     score_other = (player == winner) * -SCORE_OTHER + (player != winner) * SCORE_OTHER
     for row in range(board_size):
         for col in range(board_size):
-            score = (winner == board.square(row, col))
+            score = (player == board.square(row, col)) * score_player + (provided.switch_player(player) == board.square(row, col)) * score_other
+            scores[row][col] += score
 
 
 
