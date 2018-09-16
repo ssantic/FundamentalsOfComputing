@@ -31,8 +31,8 @@ def mc_update_scores(scores, board, player):
     """Take a grid of scores, score the completed board, and update the grid"""
     board_size = board.get_dim()
     winner = board.check_win()
-    score_player = (player == winner) * SCORE_CURRENT + (player != winner) * -SCORE_CURRENT
-    score_other = (player == winner) * -SCORE_OTHER + (player != winner) * SCORE_OTHER
+    score_player = (player == winner) * SCORE_CURRENT + (provided.switch_player(player) == winner) * -SCORE_CURRENT
+    score_other = (player == winner) * -SCORE_OTHER + (provided.switch_player(player) == winner) * SCORE_OTHER
     for row in range(board_size):
         for col in range(board_size):
             score = (player == board.square(row, col)) * score_player + (provided.switch_player(player) == board.square(row, col)) * score_other
@@ -59,8 +59,8 @@ def mc_move(board, player, trials):
     """Return a board move for a machine player"""
     board_size = board.get_dim()
     scores = [[0 for _ in range(board_size)] for _ in range(board_size)]
-    for _ in range(trials):
-        trial_board = board
+    for dummy_trial in range(trials):
+        trial_board = board.clone()
         mc_trial(trial_board, player)
         mc_update_scores(scores, trial_board, player)
     best_move = get_best_move(board, scores)
