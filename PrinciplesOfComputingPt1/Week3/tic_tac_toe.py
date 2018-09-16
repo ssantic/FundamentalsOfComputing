@@ -38,12 +38,15 @@ def mc_update_scores(scores, board, player):
 
 
 def get_best_move(board, scores):
-    max_value = max(sum(scores, []))
+    empty_squares = board.get_empty_squares()
+    empty_scores = []
+    for (row, col) in empty_squares:
+        empty_scores.append(scores[row][col])
+    max_score = max(empty_scores)
     potential_moves = []
-    for i, row in enumerate(scores):
-        for j, score in enumerate(row):
-            if score == max_value:
-                potential_moves.append((i, j))
+    for (row, col) in empty_squares:
+        if scores[row][col] == max_score:
+            potential_moves.append((row, col))
 
     best_move = random.choice(potential_moves)
     return best_move
