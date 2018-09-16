@@ -20,7 +20,7 @@ SCORE_OTHER = 1.0     # Score for squares played by the other player
 def mc_trial(board, player):
     current_player = player
     while board.check_win() is not None:
-        empty_squares = board.get_empty_sqares()
+        empty_squares = board.get_empty_squares()
         (row, col) = random.choice(empty_squares)
         board.move(row, col, current_player)
         current_player = provided.switch_player(current_player)
@@ -37,9 +37,19 @@ def mc_update_scores(scores, board, player):
             scores[row][col] += score
 
 
-
 def get_best_move(board, scores):
-    raise NotImplementedError
+    max_value = max(sum(scores, []))
+    potential_moves = []
+    for i, row in enumerate(scores):
+        for j, score in enumerate(row):
+            if score == max_value:
+                potential_moves.append((i, j))
+
+    best_move = random.choice(potential_moves)
+    return best_move
+
+
+
 
 
 def mc_move(board, player, trials):
